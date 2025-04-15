@@ -27,11 +27,11 @@ flask_task_manager/
    cd flask_task_manager
    ```
 
-  python -m venv venv
-  source venv/bin/activate  # On Windows: venv\Scripts\activate
-  pip install -r requirements.txt
-  python app.py
-  http://127.0.0.1:4000
+  - python -m venv venv
+  - source venv/bin/activate  # On Windows: venv\Scripts\activate
+  - pip install -r requirements.txt
+  - python app.py
+  - http://127.0.0.1:4000
 
  ## Future Improvements
 Add persistent storage using a database (e.g., SQLite, PostgreSQL).
