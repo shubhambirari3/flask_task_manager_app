@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Task Manager</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+        }
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+        .task-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .task-item.done .content {
+            text-decoration: line-through;
+            color: #888;
+        }
+        .task-item .content {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+        .task-item .due-date {
+            font-size: 0.9em;
+            color: #555;
+            margin-right: 10px;
+        }
+        .task-item .actions a {
+            margin-left: 5px;
+            text-decoration: none;
+            color: blue;
+        }
+        .task-item .actions .delete {
+            color: red;
+        }
+        .add-task-form {
+            margin-top: 20px;
+        }
+        .add-task-form input[type="text"],
+        .add-task-form input[type="date"] {
+            padding: 8px;
+            margin-right: 5px;
+        }
+        .add-task-form button {
+            padding: 8px 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Task Manager & Reminder</h1>
+
+    <ul class="task-list">
+        {% for task in tasks %}
+            <li class="task-item {% if task.done %}done{% endif %}">
+                <span class="content">{{ task.content }}</span>
+                {% if task.due_date %}
+                    <span class="due-date">Due: {{ task.due_date }}</span>
+                {% endif %}
+                <span class="actions">
+                    <a href="{{ url_for('toggle_task', task_id=task.id) }}">
+                        {% if task.done %}Undo{% else %}Done{% endif %}
+                    </a>
+                    <a href="{{ url_for('delete_task', task_id=task.id) }}" class="delete">Delete</a>
+                </span>
+            </li>
+        {% else %}
+            <li>No tasks yet!</li>
+        {% endfor %}
+    </ul>
+
+    <form action="{{ url_for('add_task') }}" method="post" class="add-task-form">
+        <input type="text" name="content" placeholder="New task..." required>
+        <input type="date" name="due_date" title="Optional due date">
+        <button type="submit">Add Task</button>
+    </form>
+
+</body>
+</html>
